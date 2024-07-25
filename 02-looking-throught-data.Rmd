@@ -1,0 +1,298 @@
+---
+title: "Lecciión 3: Cambia tus datos"
+archivo de salida: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+## Contexto de esta actividad
+
+En esta actividad, repasarÃ¡s un escenario y te enfocarÃ¡s en manipular
+y modificar datos reales en R. AprenderÃ¡s mÃ¡s acerca de funciones que
+puedes usar para manipular tus datos, usar resÃºmenes estadÃ­sticos para
+explorar tus datos y sacar conclusiones iniciales para tus interesados.
+
+A lo largo de esta actividad, tambiÃ©n tendrÃ¡s la oportunidad de
+practicar escribir tu propio cÃ³digo haciendo cambios en los bloques de
+cÃ³digo tÃº mismo. Si encuentras un error o te trabas, siempre puedes
+consultar el archivo .rmd Lesson3_Change_Solutions en la carpeta
+"Solutions" bajo "Week 3" para ver el cÃ³digo correcto completo.
+
+## El escenario
+
+En este escenario, eres un analista de datos jÃºnior que trabaja para
+una empresa de reservas hoteleras. Se te pidiÃ³ que limpies un archivo
+.csv que se creÃ³ despuÃ©s de consultar una base de datos para combinar
+dos tablas diferentes de hoteles distintos. Ya realizaste algunas
+funciones de limpieza bÃ¡sicas sobre estos datos; esta actividad se
+enfocarÃ¡ en usar funciones para realizar tareas bÃ¡sicas de
+manipulaciÃ³n de datos.
+
+## Paso 1: Cargar paquetes
+
+Comienza instalando los paquetes requeridos. Si ya instalaste y cargaste
+`tidyverse`, skimr`y`janitor\` en esta sesiÃ³n, puedes saltearte los
+bloques de cÃ³digo en este paso. Esto quizÃ¡s tarde unos minutos en
+ejecutarse y puede ser que salte una ventana emergente que te pregunte
+si deseas continuar. Haz clic en sÃ­ para seguir instalando los paquetes.
+
+```{r install packages}
+install.packages("tidyverse")
+install.packages("skimr")
+install.packages("janitor")
+```
+
+Una vez que un paquete estÃ¡ instalado, puedes cargarlo ejecutando la
+funciÃ³n `library()` con el nombre del paquete dentro de los
+parÃ©ntesis:
+
+```{r load packages}
+library(tidyverse)
+library(skimr)
+library(janitor)
+```
+
+## Paso 2: Importar datos
+
+En el bloque que aparece a continuaciÃ³n, usarÃ¡s la funciÃ³n
+`read_csv()` para importar datos de un archivo .csv llamado
+"hotel_bookings.csv" en la carpeta del proyecto y guardarlo como un
+marco de datos llamado `hotel_bookings`.
+
+Si esta lÃ­nea provoca un error, copia la lÃ­nea setwd("projects/Course
+7/Week 3") antes de ella.
+
+Escribe el nombre de archivo en el lugar correcto para cargarlo en tu
+consola R:
+
+```{r load dataset}
+hotel_bookings <- bookings_df
+```
+
+## Paso 3: Conocer tus datos
+
+Como estuviste haciendo en otros ejemplos, usarÃ¡s funciones de resumen
+para conocer tus datos. Esta vez, completarÃ¡s los bloques de cÃ³digo
+que aparecen debajo para usar estas diferentes funciones. Puedes usar la
+funciÃ³n `head()` para tener una vista previa de las columnas y varias
+de las primeras filas de datos. Termina el bloque de cÃ³digo que aparece
+debajo y ejecÃºtalo:
+
+```{r head function}
+head(hotel_bookings)
+
+glimpse(hotel_bookings)
+```
+
+### Cuestionario de prÃ¡ctica
+
+1.  Â¿CuÃ¡ntas columnas hay en este conjunto de datos? A: 45 B: 100 C:
+    32 D: 60
+
+2.  La variable 'arrival_date_month' es un dato de tipo chr o cÃ³digo de
+    carÃ¡cter.\
+    A: Verdadero B: Falso
+
+Ahora sabes que este conjunto de datos contiene informaciÃ³n sobre
+reservas hoteleras. Cada reserva es una fila en el conjunto de datos y
+cada columna contiene informaciÃ³n como quÃ© tipo de hotel se reservÃ³,
+cuÃ¡ndo se realizÃ³ la reserva y con cuÃ¡nta antelaciÃ³n se realizÃ³ la
+reserva (la columna 'lead_time').
+
+AdemÃ¡s de `head()`, tambiÃ©n puedes usar las funciones `str()` y
+`glimpse()` para obtener resÃºmenes de cada columna en tus datos
+organizados horizontalmente. Puedes probar estas dos funciones
+completando y ejecutando los bloques de cÃ³digo que aparecen a
+continuaciÃ³n:
+
+```{r str function}
+(hotel_bookings)
+```
+
+Puedes ver los diferentes nombres de columna y algunos valores de
+muestra a la derecha de los dos puntos.
+
+```{r glimpse function}
+glimpse()
+```
+
+TambiÃ©n puedes usar `colnames()` para obtener los nombres de las
+columnas en tu conjunto de datos. Ejecuta el bloque de cÃ³digo que
+aparece debajo para obtener los nombres de las columnas:
+
+```{r colnames function}
+colnames(hotel_bookings)
+```
+
+## Manipular tus datos
+
+Digamos que quieres ordenar los datos de mayor tiempo de antelaciÃ³n a
+menor tiempo de antelaciÃ³n porque quieres enfocarte en reservas que se
+realizaron con mucha anticipaciÃ³n. Decides que quieres intentar usar la
+funciÃ³n `arrange()`; ingresa el nombre de columna correcto despuÃ©s de
+la coma y ejecuta este bloque de cÃ³digo:
+
+```{r arrange function}
+arrange(hotel_bookings, lead_time )
+```
+
+Â¿Pero por quÃ© hay tantos ceros? Eso se debe a que `arrange()` organiza
+automÃ¡ticamente en orden ascendente y debes indicarle especÃ­ficamente
+cuÃ¡ndo organizar en orden descendente, como el bloque de cÃ³digo que
+aparece a continuaciÃ³n:
+
+```{r arrange function descending}
+arrange(hotel_bookings, desc(lead_time))
+```
+
+Ahora estÃ¡ en el orden que necesitas. Puedes hacer clic en las
+diferentes pÃ¡ginas de resultados para ver tambiÃ©n filas de datos
+adicionales.
+
+## Cuestionario de prÃ¡ctica
+
+Â¿CuÃ¡l es el mayor tiempo de antelaciÃ³n para una reserva de hotel en
+este conjunto de datos? A: 737 B: 709 C: 629 D: 0
+
+Observa que cuando solo ejecutas `arrange()` sin guardar tus datos en un
+nuevo marco de datos, no modifica el marco de datos existente. Comprueba
+ejecutando de nuevo `head()` para ver si los mayores tiempos de
+antelaciÃ³n estÃ¡n primero:
+
+```{r head function part two}
+head(hotel_bookings)
+```
+
+Esto serÃ¡ verdadero para todas las funciones que usarÃ¡s en esta
+actividad. Si quisieras crear un nuevo marco de datos que tuviera
+guardados estos cambios, usarÃ­as el operador de asignaciÃ³n, \<- , como
+estÃ¡ escrito en el bloque de cÃ³digo debajo, para almacenar los datos
+ordenados en un marco de datos llamado 'hotel_bookings_v2':
+
+```{r new dataframe}
+hotel_bookings_v2 <-
+  arrange(hotel_bookings, desc(lead_time))
+```
+
+Ejecuta `head()`para echarle un vistazo:
+
+```{r new dataframe part two}
+head(hotel_bookings_v2)
+```
+
+TambiÃ©n puedes averiguar los tiempos mÃ¡ximos y mÃ­nimos de antelaciÃ³n
+sin ordenar todo el conjunto de datos usando la funciÃ³n `arrange()`.
+Prueba usando las funciones max() y min() debajo:
+
+```{r}
+max(hotel_bookings$lead_time)
+```
+
+```{r}
+min(hotel_bookings$lead_time)
+```
+
+Recuerda que, en este caso, necesitas especificar quÃ© conjunto de datos
+y quÃ© columna usando el sÃ­mbolo \$ entre los nombres. Prueba ejecutar
+lo siguiente para ver quÃ© pasa si te olvidas una de esas partes:
+
+```{r}
+min(lead_time)
+```
+
+Este es un error comÃºn que encuentran los usuarios de R. Para corregir
+este bloque de cÃ³digo, necesitarÃ¡s agregar el marco de datos y el
+signo \$ en los lugares adecuados.
+
+Ahora, digamos que solo quieres saber el tiempo de antelaciÃ³n promedio
+de las reservas porque tu jefe te pregunta con cuÃ¡nta anticipaciÃ³n
+deberÃ­as realizar las promociones de habitaciones de hotel. Puedes usar
+la funciÃ³n `mean()` para responder esa pregunta dado que el promedio de
+un conjunto de nÃºmeros es tambiÃ©n la media de ese conjunto de
+nÃºmeros:
+
+```{r mean}
+mean(hotel_bookings$lead_time)
+```
+
+DeberÃ­as obtener la misma respuesta aun si usas el conjunto de datos v2
+que incluyÃ³ la funciÃ³n `arrange()`. Esto se debe a que la funciÃ³n
+`arrange()` no modifica los valores del conjunto de datos, sino que solo
+los reorganiza.
+
+```{r mean part two}
+mean(hotel_bookings_v2$lead_time)
+```
+
+## Cuestionario de prÃ¡ctica
+
+Â¿CuÃ¡l es el tiempo promedio de antelaciÃ³n? A: 100.0011 B: 45.0283 C:
+14.0221 D: 104.0114
+
+Le pudiste informar a tu jefe cuÃ¡l es el tiempo promedio de antelaciÃ³n
+de las reservas, pero ahora quiere saber cuÃ¡l es el tiempo promedio de
+antelaciÃ³n de las reservas solamente de los hoteles urbanos. Quieren
+enfocar la promociÃ³n que estÃ¡n realizando, dirigiÃ©ndola a grandes
+ciudades.
+
+TÃº sabes que el primer paso serÃ¡ crear un nuevo conjunto de datos que
+solo contenga datos sobre hoteles urbanos. Puedes hacerlo usando la
+funciÃ³n `filter()` y nombrar a tu nuevo marco de datos
+'hotel_bookings_city':
+
+```{r filter}
+ hotel_bookings_city <- 
+  filter(hotel_bookings, hotel_bookings$hotel=="City Hotel")
+```
+
+Mira tu nuevo conjunto de datos:
+
+```{r new dataset}
+head(hotel_bookings_city)
+```
+
+Puedes consultar con rapidez cuÃ¡l es el tiempo de antelaciÃ³n promedio
+para este conjunto de hoteles, tal como lo hiciste con todos los hoteles
+antes:
+
+```{r average lead time city hotels}
+mean(hotel_bookings_city$lead_time)
+```
+
+Ahora, tu jefe quiere obtener mucha mÃ¡s informaciÃ³n sobre hoteles
+urbanos, incluyendo tiempo mÃ¡ximo y mÃ­nimo de antelaciÃ³n de las
+reservas. TambiÃ©n le interesa en quÃ© difieren a los hoteles tipo
+resort. No quieres ejecutar cada lÃ­nea de cÃ³digo una y otra vez, por lo
+que decides usar las funciones `group_by()`y `summarize()`. TambiÃ©n
+puedes usar el operador de canalizaciÃ³n para que tu cÃ³digo sea mÃ¡s
+fÃ¡cil de seguir. AlmacenarÃ¡s el nuevo conjunto de datos en un marco de
+datos llamado 'hotel_summary':
+
+```{r group and summarize}
+hotel_summary <- 
+  hotel_bookings %>%
+  group_by(hotel) %>%
+  summarise(average_lead_time=mean(lead_time),
+            min_lead_time=min(lead_time),
+            max_lead_time=max(lead_time))
+```
+
+Comprueba tu nuevo conjunto de datos usando head() nuevamente:
+
+```{r}
+head(hotel_summary)
+```
+
+## ConclusiÃ³n de la actividad
+
+Poder manipular datos es una destreza clave para trabajar en `R`.
+DespuÃ©s de esta actividad, deberÃ­as estar mÃ¡s familiarizado con
+funciones que te permiten modificar tus datos, por ejemplo, `arrange()`,
+`group_by()` y `filter()`. TambiÃ©n tienes algo de experiencia en el uso
+de resÃºmenes estadÃ­sticos para sacar informaciÃ³n de tus datos. Puedes
+seguir practicando estas destrezas modificando los bloques de cÃ³digo en
+el archivo rmd o usar este cÃ³digo como punto de partida en la consola
+de tu propio proyecto. Mientras practicas, analiza cÃ³mo la realizaciÃ³n
+de tareas es similar y diferente en `R` en comparaciÃ³n con otras
+herramientas que aprendiste a lo largo de este programa.
