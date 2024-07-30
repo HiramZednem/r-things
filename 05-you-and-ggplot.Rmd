@@ -20,7 +20,8 @@ In the chunk below, you will use the `read_csv()` function to import data from a
 If this line causes an error, copy in the line setwd("projects/Course 7/Week 4") before it.
 
 ```{r load data}
-hotel_bookings <- read.csv("hotel_bookings.csv")
+help(read.csv)
+hotel_bookings <- read.csv("./datasets/hotel_bookings.csv" )
 ```
 
 ## Step 2: Look at a sample of your data
@@ -74,8 +75,17 @@ Next, your stakeholder says that she wants to increase weekend bookings, an impo
 Try mapping 'stays_in_weekend_nights' on the x-axis and 'children' on the y-axis by filling out the remainder of the code below.
 
 ```{r}
+
+head(hotel_bookings)
+
+hotel_bookings %>% 
+  select(stays_in_weekend_nights) %>% 
+  filter(stays_in_weekend_nights>1)
+  table()
+
+
 ggplot(data = hotel_bookings) +
- geom_point(mapping = aes(x = , y = ))
+ geom_point(mapping = aes(x = stays_in_weekend_nights, y = children))
 ```
 
 If you correctly enter this code, you should have a scatterplot with 'stays_in_weekend_nights' on the x-axis and 'children' on the y-axis.
